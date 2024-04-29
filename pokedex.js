@@ -10,12 +10,13 @@ const obtenerTodosLosPokemones = async () => {
 const obtenerPokemonPorId = async (id_pokemon) => {
     try {
         const response = await fetch(URL_API + '/pokemon/' + id_pokemon);
-        //  if (response.ok) {
-        //      throw ERRORES.ERROR_INTERNO_DEL_SERVIDOR;
-        // }
         if (response.status === 404) {
             throw ERRORES.POKEMON_NO_ENCONTRADO;
-        } else {
+        }
+         if (!response.ok) {
+             throw ERRORES.ERROR_INTERNO_DEL_SERVIDOR;
+         }
+        else {
             const pokemon = await response.json();
             if (pokemon.abilities.length <= 1) {
                 console.log(pokemon.id, pokemon.name, pokemon.abilities[0].ability.name);
